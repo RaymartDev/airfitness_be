@@ -1,22 +1,27 @@
 package com.airfitness.airfitness.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.time.Instant;
 
 @Entity
-@Table(name = "organization_users")
+@Table(name = "refresh_tokens")
 @Data
-@NoArgsConstructor
-public class OrganizationUser {
+public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     private User user;
+
     @ManyToOne
     private Organization organization;
 
-    private String role;
+    private String tokenHash;
+    private Instant expiresAt;
+    private boolean revoked = false;
+    private Instant createdAt = Instant.now();
 }
